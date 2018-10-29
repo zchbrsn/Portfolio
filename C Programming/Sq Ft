@@ -1,0 +1,13 @@
+#include <stdio.h>
+#Simple code to calculate square feet of rooms
+
+int main(void) {
+int room1,room2,room3,room4,squareft;
+room1 = 10 * 14;
+room2 = 9 * 10;
+room3 = 12 * 12;
+room4 = 15 * 8;
+squareft = room1 + room2 + room3 + room4;
+printf("%d", squareft);
+	return 0;
+}
