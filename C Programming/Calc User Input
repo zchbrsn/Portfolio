@@ -1,0 +1,66 @@
+#include <stdio.h>
+
+/*This program will allow the user to decide between 3 options.  The user can
+calculate area, perimeter, or exit.  Once the user decides, they will input
+length and width of rectangle.  The program will then calculate and print.*/
+
+//Function to calculate Area of rectangle
+int iCalculateArea(int iArea, int iLength, int iWidth){
+	
+	//Area calculation
+	iArea = iLength * iWidth;
+
+	return iArea;
+}
+
+//Function to calculate Perimeter of rectangle
+int iCalculatePer(int iPer, int iLength, int iWidth){
+	
+	//Perimeter calculation
+	iPer = 2 * (iLength + iWidth);
+
+	return iPer;
+}
+
+//Main program
+int main(void) {
+	//Initialize all variables to 0
+	int iArea = 0;
+	int iPer = 0;
+	int iLength = 0;
+	int iWidth = 0;
+	int iDecision = 1;
+
+	//User decision loop
+	while (iDecision != 3){
+		printf("Please choose an option.\n  1.  Calculate Area\n  2.  Calculate Perimeter\n  3.  To exit\n");
+		scanf("%d", &iDecision);
+		
+		//Option 1
+		if (iDecision == 1){
+			printf("Please enter length of rectangle.\n");
+			scanf("%d", &iLength);
+			printf("Please enter width of rectangle.\n");
+			scanf("%d", &iWidth);
+			
+			//Area function recall
+			iArea = iCalculateArea(iArea, iLength, iWidth);
+
+			printf("The area of the rectangle is %d.\n", iArea);
+		}
+		//Option 2
+		else if (iDecision == 2){
+			printf("Please enter length of rectangle.\n");
+			scanf("%d", &iLength);
+			printf("Please enter width of rectangle.\n");
+			scanf("%d", &iWidth);
+
+			//Perimeter function recall
+			iPer = iCalculatePer(iPer, iLength, iWidth);
+			
+			printf("The perimeter of the rectangle is %d.\n", iPer);
+		}
+	}
+
+	return 0;
+}
