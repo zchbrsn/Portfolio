@@ -1,0 +1,54 @@
+//C Code
+//This program will allow the user to choose computer parts and sum totals
+//Developer: Zach Burson CMIS102
+//Date: 05 Sep 2015
+#include <stdio.h>
+
+int main(void) {
+//Define variables
+float Base, CPU1, CPU2, CPU3, GPU1, GPU2, GPU3, RAM1, RAM2, RAM3, Total;
+
+//Define floats
+Base = 500.00;
+CPU1 = 339.99;
+CPU2 = 174.99;
+CPU3 = 89.99;
+GPU1 = 1029.99;
+GPU2 = 679.99;
+GPU3 = 349.99;
+RAM1 = 85.99;
+RAM2 = 44.99;
+RAM3 = 25.99;
+Total = Base + CPU1 || CPU2 || CPU3 + GPU1 || GPU2 || GPU3 + RAM1 || RAM2 || RAM3;
+
+//Prompt user for base
+printf("Enter Base.\n");
+//Input Base
+scanf("%f, &Base");
+
+//Prompt user for CPU
+printf("Enter CPU1, CPU2, or CPU3.\n");
+//Input CPU
+scanf("%f, &CPU1");
+scanf("%f, &CPU2");
+scanf("%f, &CPU3");
+
+//Prompt user for GPU
+printf("Enter GPU1, GPU2, or GPU3.\n");
+//Input GPU
+scanf("%f, &GPU1");
+scanf("%f, &GPU2");
+scanf("%f, &GPU3");
+
+//Prompt user for RAM
+printf("Enter RAM1, RAM2, or RAM3.\n");
+//Input RAM
+scanf("%f, &RAM1");
+scanf("%f, &RAM2");
+scanf("%F, %RAM3");
+
+//Print
+printf("Total cost for the computer is %f", Total);
+
+	return 0;
+} 
