@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+int main(void) {
+	//This program will hold 10 integer values representing Web Site hits received.
+	int iInternetHits[10];
+	int i;
+	
+	//User input loop
+	for (i = 0; i < 10; i++)
+	{
+		printf("Please enter the amount of hits received.\n");
+		scanf("%d", &iInternetHits[i]);
+	}
+	
+	//Results loop
+	for (i = 0; i < 10; i++)
+	{
+		printf("For day [%d], you entered %d.\n", i, iInternetHits[i]);
+	}
+	
+	return 0;
+}
