@@ -1,4 +1,4 @@
-## Welcome to my portfolio
+## Welcome to the portfolio of Zachary Burson
 
 This site has a listing of projects that I've completed as well as other achievements.
 
