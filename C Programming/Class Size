@@ -1,0 +1,30 @@
+Class size
+Program adds a student to the class until the class is full
+Class size is 30
+
+#include <stdio.h>
+
+int main(void) {
+
+int iClassSize = 0;
+int iNewStudent = 0;
+int iMaxClassSize = 30;
+int iSpotsLeft = 0;
+
+do
+{
+	printf("How many students do you want to add?\n");
+	scanf("%d", &iNewStudent);
+		if (iClassSize + iNewStudent >= iMaxClassSize)
+	{
+		iClassSize = iMaxClassSize;
+		printf("Class is full! There are %d students in the class\n", iClassSize);
+		break;
+	}
+	iClassSize = iClassSize + iNewStudent;
+	iSpotsLeft = iMaxClassSize - iClassSize;
+	printf("Class size is now %d.  There are %d spots left.\n", iClassSize, iSpotsLeft);
+}
+while (iClassSize <= iMaxClassSize);
+	return 0;
+}
