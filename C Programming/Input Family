@@ -1,7 +1,5 @@
 #include <stdio.h>
 
-char cFamLoc[100];
-
 int iCalculateAvg(int iAvg, int iSum, int iFamTotal){
 
 	iAvg = iFamTotal / iSum;
@@ -9,21 +7,12 @@ int iCalculateAvg(int iAvg, int iSum, int iFamTotal){
 	return iAvg;
 }
 
-/*(int iTXFamCalc(int iCounter, char cFamLoc[100], char cTXFam[100]){
-	
-	while (cFamLoc[iCounter] != '\0' && cTXFam[iCounter] != '\0'){
-		if (cFamLoc[iCounter] == 'TX'){
-			
-		}
-	}
-}
-*/
-
 int main(void) {
 	int iSum = 0;
 	int iFamTotal = 0;
 	int iAvg = 0;
-	char cFamName[500];
+	char cFamName[100];
+	char cFamLoc[2];
 
 	for (iSum = 0; iSum >= 0; iSum++){
 		int iDecision = 0;
@@ -32,13 +21,16 @@ int main(void) {
 		scanf("%d", &iDecision);
 
 		if (iDecision == 1){
-			
+
 			printf("Enter your family member's name.\n");
 			scanf("%s", &cFamName);
 			printf("Please enter %s's age.\n", cFamName);
 			scanf("%d", &iFamAge);
 			printf("Please enter where %s lives. (e.g. AZ, NY, etc).\n", cFamName);
 			scanf("%s", &cFamLoc);
+			if (cFamLoc[iSum] == 'TX'){
+				gets(cFamName);
+			}
 			printf("Thank you for this information.\n");
 
 			iFamTotal = iFamTotal + iFamAge;
@@ -54,6 +46,8 @@ int main(void) {
 
 	}
 
+	printf("The following family members currently live in Texas:\n");
+	puts(cFamName);
 
 	iAvg = iCalculateAvg(iAvg, iSum, iFamTotal);
 	printf("Your family has an average age of %d\n", iAvg);
