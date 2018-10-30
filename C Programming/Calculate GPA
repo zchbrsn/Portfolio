@@ -1,0 +1,50 @@
+#include "stdafx.h"
+#include <stdio.h>
+
+int main(void) {
+	char cStudentName[100];
+	float fAverageGPA = 0;
+	float fSumGPA = 0;
+	int iStudentCounter = 0;
+	int iGradeCounter = 0;
+	int iNumberOfStudents = 0;
+	int iNumberOfGrades = 0;
+	char cGrade[5] = { 'A', 'B', 'C', 'D', 'F' };
+	float fGradeLetter[5] = { '4.00', '3.00', '2.00', '1.00', '0.00' };
+	float fGradePoint = 0;
+	char cRealGrade;
+	int i = 0;
+	// Input number of students
+	printf("Enter how many students you would like to calculate GPA for.\n");
+	scanf("%d", &iNumberOfStudents);
+
+	// Input student names
+	for (iStudentCounter = 0; iStudentCounter < iNumberOfStudents; iStudentCounter++){
+		fSumGPA = 0;
+		fAverageGPA = 0;
+		printf("Enter the student's name.\n");
+		scanf("%s", &cStudentName);
+		printf("How many grades would you like to input for this student?\n");
+		scanf("%d", &iNumberOfGrades);
+
+		// Input grades
+		for (iGradeCounter = 0; iGradeCounter < iNumberOfGrades; iGradeCounter++){
+			printf("Enter the student's grade (A, B, C, D, F).\n");
+			scanf("%s", &cRealGrade);
+
+			for (i = 0; i < 5; i++){
+				
+				if (cRealGrade = cGrade[i]){
+					fGradePoint = fGradeLetter[i];
+				}
+			}
+			fSumGPA += fGradePoint;
+		}
+
+		//Calculate average
+		fAverageGPA = fSumGPA / iNumberOfGrades;
+		printf("%s received a %.2f GPA.\n", cStudentName, fAverageGPA);
+
+	}
+	return 0;
+}
