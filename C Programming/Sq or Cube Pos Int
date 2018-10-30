@@ -1,0 +1,48 @@
+// C code
+// This program will provide options for a user to calculate the square 
+// or cube of a positive Integer input by a user.
+// Developer: Faculty CMIS102
+// Date: Jan 31, 2014
+#include <stdio.h>
+int main ()
+{
+  /* variable definition: */ 
+   int intValue, menuSelect,Results;
+   intValue = 1; 
+   // While a positive number
+ while (intValue > 0)
+  {    
+     printf ("Enter a positive Integer to calculate the square cube or cube; OR a negative Integer to exit the program.\n: ");
+     scanf("%d", &intValue);
+    if (intValue > 0)
+    {
+     printf ("Enter 1 to calculate Square, 2 to Calculate Cube \n: ");
+     scanf("%d", &menuSelect);
+     if (menuSelect == 1)
+     {
+        // Call the Square Function
+        Results = Square(intValue);
+        printf("Square of %d is %d\n",intValue,Results);
+     }
+     else if (menuSelect == 2)
+     {
+        // Call the Cube function
+        Results = Cube(intValue);
+        printf("Cube of %d is %d\n",intValue,Results);
+     }
+     else 
+       printf("Invalid menu item, only 1 or 2 is accepted\n");
+     }      
+    }      
+  return 0;
+}
+/* function returning the Square of a number */
+int Square(int value)
+{
+    return value*value;
+}  
+/* function returning the Cube of a number */
+int Cube(int value)
+{
+    return value*value*value;
+}
