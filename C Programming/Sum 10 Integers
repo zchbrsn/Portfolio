@@ -1,0 +1,28 @@
+// C code
+// This program will calculate the sum of 10 integers.
+// Developer: Faculty CMIS102
+// Date: Jan 31, 2014
+#include <stdio.h>
+int main ()
+{
+/* variable definition: */
+int count, value, sum;
+
+/* Initialize count and sum */
+count = 0;
+sum = 0;
+
+// Loop through to input values
+while (count < 10)
+{
+  printf("Enter an Integer\n");
+  scanf("%d", &value);
+  sum = sum + value;
+  count = count + 1;
+}
+
+printf("Sum is %d\n " , sum );
+if (sum >1000)
+  printf("Sum is over 1000\n");
+return 0;
+}
