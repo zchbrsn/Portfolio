@@ -12,6 +12,6 @@ V/R
 
 Zachary Burson
 
-Hacker Rank Profile: https://www.hackerrank.com/zchbrsn
+<a href=https://www.hackerrank.com/zchbrsn>Hacker Rank Profile</a>
 
 ## Thank you for your consideration
