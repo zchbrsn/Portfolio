@@ -1,0 +1,305 @@
+********** INSUFFICIENT FUNDS CLASS **********
+
+//File: ATM
+//Author: Zach Burson
+//Class: CMIS 242
+//Date: 20 Nov 2016
+//Purpose: Class to catch checked exceptions
+
+public class InsufficientFunds extends Exception{
+    
+    //Constructor
+    public InsufficientFunds (String message) {
+        super(message);
+    }
+    
+}
+
+********** ACCOUNT CLASS **********
+
+//File: Account
+//Author: Zach Burson
+//Class: CMIS 242
+//Date: 20 Nov 2016
+//Purpose: Methods for actions on ATM
+
+import javax.swing.*;
+import java.text.DecimalFormat;
+
+public class Account {
+    
+    //Initialize variables
+    private static int chargeNum = 0;
+    private float checkingBalance;
+    private float savingsBalance;
+    private float amountTxt;
+    DecimalFormat df = new DecimalFormat("'$'0.00");
+
+    //Constructor
+    public Account(float checkingBalance, float savingsBalance) {
+        this.checkingBalance = checkingBalance;
+        this.savingsBalance = savingsBalance;
+    }
+    
+    //Withdraw checking
+    public void withdrawChecking() throws InsufficientFunds {
+        amountTxt = getAmountTxt();
+        if (amountTxt % 20 != 0) {
+            JOptionPane.showMessageDialog(null, "Withdrawals must be in increments of $20.");
+        }
+        else {
+            if ((checkingBalance - amountTxt) < 0) {
+                throw new InsufficientFunds("You cannot withdraw more funds. Checking account balance is: " + df.format(checkingBalance));
+            }
+            chargeNum++;
+            if (chargeNum > 4) {
+                checkingBalance -= 1.50;
+                JOptionPane.showMessageDialog(null, "You have incurred a service charge of $1.50.");
+            }
+            checkingBalance -= amountTxt;
+            if (amountTxt != 0) {
+                JOptionPane.showMessageDialog(null, "Withdrawal successful.");
+            }
+        }
+    }//end withdraw checking
+    
+    //Withdraw savings
+    public void withdrawSavings() throws InsufficientFunds {
+        amountTxt = getAmountTxt();
+        if (amountTxt % 20 != 0) {
+            JOptionPane.showMessageDialog(null, "Withdrawals must be in increments of $20.");
+        }
+        else {
+            if ((savingsBalance - amountTxt) < 0) {
+            throw new InsufficientFunds("You cannot withdraw more funds. Savings account balance is: " + df.format(savingsBalance));
+        }
+            chargeNum++;
+            if (chargeNum > 4) {
+                savingsBalance -= 1.50;
+                JOptionPane.showMessageDialog(null, "You have incurred a service charge of $1.50.");
+        }
+            savingsBalance -= amountTxt;
+            if (amountTxt != 0) {
+                JOptionPane.showMessageDialog(null, "Withdrawal successful.");
+            }
+        }
+    }//end withdraw savings
+    
+    //Deposit checking
+    public void depositChecking() {
+        amountTxt = getAmountTxt();
+        checkingBalance += amountTxt;
+        if (amountTxt != 0) {
+                JOptionPane.showMessageDialog(null, "Deposit to checking account successful.");
+            }
+    }//end deposit checking
+    
+    //Deposit savings
+    public void depositSavings() {
+        amountTxt = getAmountTxt();
+        savingsBalance += amountTxt;
+        if (amountTxt != 0) {
+                JOptionPane.showMessageDialog(null, "Deposit to savings accounts successful.");
+            }
+    }//end deposit savings
+    
+    //Transfer to checking
+    public void transferToChecking() throws InsufficientFunds {
+        amountTxt = getAmountTxt();
+        if ((savingsBalance - amountTxt) < 0) {
+            throw new InsufficientFunds("You cannot transfer more funds. Savings account balance is:" + df.format(savingsBalance));
+        }
+        else {
+            checkingBalance += amountTxt;
+            savingsBalance -= amountTxt;
+            if (amountTxt != 0) {
+                JOptionPane.showMessageDialog(null, "Transfer to checking account successful.");
+            }
+        }
+    }//end transfer to checking
+    
+    //Transfer to savings
+    public void transferToSavings() throws InsufficientFunds {
+        amountTxt = getAmountTxt();
+        if ((checkingBalance - amountTxt) < 0) {
+            throw new InsufficientFunds("You cannot transfer more funds. Checking account balance is: " + df.format(checkingBalance));
+        }
+        else {
+            savingsBalance += amountTxt;
+            checkingBalance -= amountTxt;
+            if (amountTxt != 0) {
+                JOptionPane.showMessageDialog(null, "Transfer to savings account successful.");
+            }
+        }//end transfer to savings
+    }
+    
+    //Show checking balance
+    public void showCheckingBalance() {
+        JOptionPane.showMessageDialog(null, "Your checking balance is: " + df.format(checkingBalance));
+    }//end show balance
+    
+    //Show savings balance
+    public void showSavingsBalance() {
+        JOptionPane.showMessageDialog(null, "Your savings balance is: " + df.format(savingsBalance));
+    }//end show balance
+    
+    //Retrieve amount text field
+    public float getAmountTxt() {
+        try {
+            if (ATM.amount == null) {
+                JOptionPane.showMessageDialog(null, "Please enter a number.");
+            }
+            else {
+                return Float.parseFloat(ATM.amount.getText());
+            }
+        }
+        catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Please enter a number.");
+        }
+        return 0;
+    }
+    
+}
+
+********** ATM AND MAIN CLASS **********
+
+//File: ATM
+//Author: Zach Burson
+//Class: CMIS 242
+//Date: 20 Nov 2016
+//Purpose: Withdraw/Deposit/Transfer/See Balance of funds
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class ATM extends JFrame implements ActionListener {
+    
+    //Frame/panel
+    private JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    //Buttons
+    private JButton withdraw = new JButton("Withdraw");
+    private JButton deposit = new JButton("Deposit");
+    private JButton transferTo = new JButton("Transfer To");
+    private JButton balance = new JButton("Balance");
+    //Radio buttons
+    private JRadioButton checking = new JRadioButton("Checking", true);
+    private JRadioButton savings = new JRadioButton("Savings");
+    //Text field
+    public static JTextField amount = new JTextField(20);
+    //Frame dimensions
+    private final int WIDTH = 250;
+    private final int HEIGHT = 180;
+    //Account
+    Account myAccount = new Account((float) 528.32, (float) 241.96);
+    
+    //Constructor
+    public ATM() {
+        //Frame constraints
+        setSize(WIDTH, HEIGHT);
+        setTitle("ATM");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        add(panel);
+        //Withdraw Button
+        panel.add(withdraw);
+        withdraw.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent withdraw) {
+                if (checking.isSelected()) {
+                    try {
+                        myAccount.withdrawChecking();
+                    }
+                    catch(InsufficientFunds e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+                else {
+                    try {
+                        myAccount.withdrawSavings();
+                    }
+                    catch(InsufficientFunds e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+            }
+        });
+        //Deposit Button
+        panel.add(deposit);
+        deposit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent deposit) {
+                if (checking.isSelected()) {
+                    myAccount.depositChecking();
+                }
+                else {
+                    myAccount.depositSavings();
+                }
+            }
+        });
+        //Transfer To Button
+        panel.add(transferTo);
+        transferTo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent transferTo) {
+               if(checking.isSelected()) {
+                   try {
+                       myAccount.transferToChecking();
+                   }
+                   catch (InsufficientFunds e) {
+                       System.out.println(e.getMessage());
+                   }
+               }
+               else {
+                   try {
+                       myAccount.transferToSavings();
+                   }
+                   catch (InsufficientFunds e) {
+                       System.out.println(e.getMessage());
+                   }
+               }
+            }
+        });
+        //Balance button
+        panel.add(balance);
+        balance.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent balance) {
+                if(checking.isSelected()) {
+                    myAccount.showCheckingBalance();
+                }
+                else {
+                    myAccount.showSavingsBalance();
+                }
+            }
+        });
+        //Radio Buttons
+        panel.add(checking);
+        panel.add(savings);
+        ButtonGroup radioButtons = new ButtonGroup();
+        radioButtons.add(checking);
+        checking.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                
+            }
+        });
+        radioButtons.add(savings);
+        savings.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                
+            }
+        });
+        //Amount Field
+        panel.add(amount);
+        setVisible(true);
+    }
+    
+    //Main method
+    public static void main(String[] args) {
+        
+        ATM myATM = new ATM();
+        
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+}
