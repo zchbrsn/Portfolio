@@ -1,0 +1,237 @@
+********** CALCULATIONS CLASS **********
+
+//File: Sequence
+//Author: Zach Burson
+//Class: CMIS 242
+//Date: 04 Dec 2016
+//Purpose: Make iterative and recursive calculations
+
+import javax.swing.JOptionPane;
+import java.io.*;
+
+//Efficiency counter + iterative and recursive calculations
+public class Sequence {
+
+    //Variables
+    private static int nthResult;
+    private static String nthResultTxt;
+    private static String efficiencyTxt;
+    private static int iterEfficiency = 0;
+    private static int recurEfficiency = 0;
+    
+    //Method to write to file
+    /*public static void write() throws IOException {
+        BufferedWriter bw = null;
+        
+        try {
+            bw = new BufferedWriter(new FileWriter("Data.csv", true));
+            bw.write(CalcIterRecur.enterN.getText());
+            bw.write(",");
+            bw.newLine();
+            bw.write(iterEfficiency);
+            bw.write(",");
+            bw.newLine();
+            bw.write(recurEfficiency);
+            bw.write(",");
+            bw.flush();
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (bw != null) {
+                bw.close();
+            }
+        }
+    }*/
+
+    //Method to compute iterative Pell number
+    public static int computeIterative(int n) {
+        int a = 1, b = 2, t = 3, c;
+
+        if (n < 0) {
+            JOptionPane.showMessageDialog(null, "Please enter a positive integer.");
+        }
+        if (n < t && n > -1) {
+            nthResult = n;
+        } else {
+            while (t <= n) {
+                c = a + (2 * b);
+                a = b;
+                b = c;
+                t++;
+                nthResult = c;
+                iterEfficiency++;
+            }
+        }
+        //Set text in GUI
+        nthResultTxt = String.valueOf(nthResult);
+        CalcIterRecur.result.setText(nthResultTxt);
+        efficiencyTxt = String.valueOf(iterEfficiency);
+        CalcIterRecur.effic.setText(efficiencyTxt);
+        return nthResult;
+    }
+
+    //Method to compute recursive Pell number
+    public static int computeRecursive(int n) {
+        if (n < 0) {
+            JOptionPane.showMessageDialog(null, "Please enter a positive integer.");
+        }
+        if (n == 0) {
+            nthResult = 0;
+        }
+        else if (n == 1) {
+            nthResult = 1;
+        } else {
+            recurEfficiency++;
+            nthResult = (2 * (computeRecursive(n - 1)) + computeRecursive(n - 2));
+        }
+        //Set text in GUI
+        nthResultTxt = String.valueOf(nthResult);
+        CalcIterRecur.result.setText(nthResultTxt);
+        efficiencyTxt = String.valueOf(recurEfficiency);
+        CalcIterRecur.effic.setText(efficiencyTxt);
+        return nthResult;
+    }
+    
+    //Get iterative efficiency number
+    public int getIterEfficiency() {
+        return iterEfficiency;
+    }
+    
+    //Get recursive efficiency number
+    public int getRecurEfficiency() {
+        return recurEfficiency;
+    }
+}
+
+********** GUI AND MAIN CLASS **********
+
+//File: CalcIterRecur
+//Author: Zach Burson
+//Class: CMIS 242
+//Date: 04 Dec 2016
+//Purpose: GUI and main method for Sequence
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.io.*;
+
+//GUI + Main Method
+public class CalcIterRecur extends JFrame implements ActionListener {
+
+    //Variables
+    private JPanel mainPanel = new JPanel(new FlowLayout());
+    private JPanel radioPanel = new JPanel();
+    private JPanel panel = new JPanel(new BorderLayout());
+    private JButton calculate = new JButton("Compute");
+    private JRadioButton iterative = new JRadioButton("Iterative", true);
+    private JRadioButton recursive = new JRadioButton("Recursive");
+    private JLabel enterNLbl = new JLabel("Enter n");
+    private JLabel calcLbl = new JLabel("");
+    private JLabel resultLbl = new JLabel("Result");
+    private JLabel efficLbl = new JLabel("Efficiency");
+    public static JTextField enterN = new JTextField(10);
+    public static JTextField result = new JTextField(10);
+    public static JTextField effic = new JTextField(10);
+    private final int WIDTH = 300;
+    private final int HEIGHT = 260;
+    private ButtonGroup radioButtons = new ButtonGroup();
+
+    //Constructor
+    public CalcIterRecur() {
+        //Frame Constraints
+        setSize(WIDTH, HEIGHT);
+        setTitle("Iterative/Recursive Calculator");
+
+        //Write to file on close
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                /*try {
+                    Sequence.write();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }*/
+            }
+        });
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        add(mainPanel);
+        mainPanel.add(radioPanel);
+        radioPanel.setLayout(new GridLayout(2, 0));
+
+        //Radio Buttons
+        radioPanel.add(iterative);
+        radioButtons.add(iterative);
+        iterative.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+
+            }
+        });
+        radioPanel.add(recursive);
+        radioButtons.add(recursive);
+        recursive.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+
+            }
+        });
+
+        //Labels and Fields
+        mainPanel.add(panel);
+        panel.setLayout(new GridLayout(4, 3, 10, 10));
+        panel.add(enterNLbl);
+        panel.add(enterN);
+        panel.add(calcLbl);
+
+        //Compute Button
+        panel.add(calculate);
+        calculate.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent calculate) {
+                try {
+                    if (iterative.isSelected()) {
+                        Sequence.computeIterative(Integer.parseInt(enterN.getText()));
+                    } else {
+                        Sequence.computeRecursive(Integer.parseInt(enterN.getText()));
+                    }
+                }
+                catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Please enter a number n.");
+                }
+            }
+
+        });
+
+        //More Labels and Fields
+            panel.add (resultLbl);
+
+            panel.add (result);
+
+            result.setEditable (
+
+            false);
+            panel.add (efficLbl);
+
+            panel.add (effic);
+
+            effic.setEditable (
+
+            false);
+            setVisible(
+        
+    
+
+    true);
+    }
+
+    //Main method
+    public static void main(String[] args) {
+        CalcIterRecur myCalc = new CalcIterRecur();
+    }
+
+    //Abstract override
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+}
