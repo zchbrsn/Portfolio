@@ -1,0 +1,66 @@
+//File: RandomGames
+//Author: Zach Burson
+//Class: CMIS 141
+//Date: 30 May 2016
+//Purpose: Fun games for the user to play against the computer
+
+//Import Random and Scanner utilities
+import java.util.Random;
+import java.util.Scanner;
+
+public class RandomGames {
+	
+	public static void main(String[] args) {
+		
+		//New Random Generator
+		Random randomBool = new Random();
+		Random randomDice = new Random();
+		
+		//New Scanner
+		Scanner in = new Scanner(System.in);
+		
+		//Define variables
+		int userDecision = 0;
+		boolean isTails = false;
+		int coinCounter = 0;
+		int diceCounter = 0;
+		int humanRoll = 0;
+		int computerRoll = 0;
+		
+		//Prompt user input for game
+		System.out.println("What game would you like to play?");
+		System.out.println("1. Coin Toss");
+		System.out.println("2. Double Dice");
+		System.out.println("3. Exit");
+		userDecision = in.nextInt();
+		
+		while (userDecision != 3){
+		
+			//Coin Toss game.  Generates random boolean (heads = true, tails = fales) and count how many games are won
+			if (userDecision == 1) {
+				while (isTails == false) {
+					isTails = randomBool.nextBoolean();
+					System.out.println("You tossed heads!");
+					coinCounter++;
+				}
+				System.out.println("You won " + coinCounter + " game(s) against the computer.");
+				break;
+			}
+			//Double Dice game.  Generate random number 1-12 vs computer.  Calculates how many games are won
+			else if (userDecision == 2) {
+				for (diceCounter = 0; humanRoll >= computerRoll; diceCounter++) {
+					humanRoll = randomDice.nextInt(12);
+					computerRoll = randomDice.nextInt(12);
+					System.out.println("You rolled a " + humanRoll + ".  Next round.");
+				}
+				System.out.println("You won " + diceCounter + " rounds against the computer!");
+				break;
+			}
+			//Invalid selection notice prompt program restart
+			else if (userDecision != 0) {
+				System.out.println(userDecision + " is not a valid selection.  Please restart the program.");
+				break;
+			}
+		}
+	}
+}
