@@ -1,0 +1,231 @@
+********** STUDENT DATABASE CLASS **********
+
+//File: Student
+//Author: Zach Burson
+//Class: CMIS 242
+//Date: 14 Dec 2016
+//Purpose: Keep track of students and calculate GPA
+
+import java.text.DecimalFormat;
+
+public class Student {
+    
+    //Variables
+    private String studentName;
+    private String studentMajor;
+    private static double gradePoints;
+    private static double GPA;
+    private static double totalQualPoints;
+    public static double credits;
+    private static double totalCredits;
+    private static double qualPoints; //Numeric value of the grade received * credit hours
+    public static String gradeName;
+    DecimalFormat df = new DecimalFormat("0.00");
+    
+    //Default constructor
+    public Student(String studentName, String studentMajor) {
+        this.studentName = studentName;
+        this.studentMajor = studentMajor;
+        gradePoints = 0;
+        GPA = 4.00;
+    }//end constructor
+    
+    //Caclculate GPA
+    public static void courseCompleted(String gradeName, double credits) {
+        //Switch to convert grade letter to points
+        switch(gradeName) {
+            case "A" :
+                gradePoints = 4.00;
+                break;
+            case "B" :
+                gradePoints = 3.00;
+                break;
+            case "C" :
+                gradePoints = 2.00;
+                break;
+            case "D" :
+                gradePoints = 1.00;
+                break;
+            case "F" :
+                gradePoints = 0.00;
+                break;
+            default :
+                System.out.println("No grade provided.");
+        }
+        //GPA calculations
+        qualPoints = gradePoints * credits;
+        totalQualPoints += qualPoints;
+        totalCredits += credits;
+        GPA = totalQualPoints / totalCredits;
+        //Max / min GPA
+        if (GPA > 4.00) {
+            GPA = 4.00;
+        }
+        else if (GPA < 0.00) {
+            GPA = 0.00;
+        }
+    }//end course completed
+    
+    //To string method
+    @Override
+    public String toString() {
+        return "\nStudent: " + studentName + "\nMajor: " + studentMajor + "\nGPA: " + df.format(GPA);
+    }//end to string method
+}//end class
+
+********** GUI AND MAIN CLASS **********
+
+//File: StudentDatabase
+//Author: Zach Burson
+//Class: CMIS 242
+//Date: 14 Dec 2016
+//Purpose: Keep track of a student database, add, delete, search, update students
+
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.*;
+import javax.swing.*;
+import java.util.HashMap;
+import java.util.Random;
+
+//GUI + Main Method
+public class StudentDatabase extends JFrame implements ActionListener {
+    
+    //GUI Variables
+    private final int WIDTH = 300;
+    private final int HEIGHT = 260;
+    private String[] selectString = {"Insert", "Delete", "Find", "Update", "Show Hashmap"};
+    private String[] gradeString = {"A", "B", "C", "D", "F"};
+    private String[] creditString = {"3", "6"};
+    private JPanel mainPanel = new JPanel(new FlowLayout());
+    private JPanel panel = new JPanel();
+    private JLabel idLbl = new JLabel("ID:");
+    private JLabel nameLbl = new JLabel("Name:");
+    private JLabel majorLbl = new JLabel("Major:");
+    private JLabel chooseLbl = new JLabel("Choose Selection:");
+    private JButton process = new JButton("Process Request");
+    private JTextField id = new JTextField(10);
+    private JTextField name = new JTextField(10);
+    private JTextField major = new JTextField(10);
+    private JComboBox selection = new JComboBox(selectString);
+    private static int idNum;
+    Random randID = new Random(System.currentTimeMillis());
+    private HashMap <Integer, Student> database = new HashMap<Integer, Student>();
+    
+    //GUI Constructor
+    public StudentDatabase() {
+        //Frame Constraints
+        setSize(WIDTH, HEIGHT);
+        setTitle("Student Database");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        add(mainPanel);
+        mainPanel.add(panel);
+        panel.setLayout(new GridLayout(5, 3, 10, 10));
+        
+        //Labels and Fields
+        panel.add(idLbl); panel.add(id); panel.add(nameLbl); panel.add(name);
+        panel.add(majorLbl); panel.add(major); panel.add(chooseLbl);
+        panel.add(selection); panel.add(process);
+        
+        //Process Button
+        process.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //Do insert functions
+                idNum = 1000 + randID.nextInt(9000 - 1);
+                if (selection.getSelectedItem() == "Insert") {
+                    if (database.containsKey(idNum)) {
+                        JOptionPane.showMessageDialog(null, "ID Number already exists.  Try again.");
+                    }
+                    else if (name.getText().equals("")) {
+                        JOptionPane.showMessageDialog(null, "Please enter a student name.");
+                    }
+                    else if (major.getText().equals("")) {
+                        JOptionPane.showMessageDialog(null, "Please enter a student major");
+                    }
+                    else {
+                        Student student = new Student(name.getText(), major.getText());
+                        database.put(idNum, student);
+                        JOptionPane.showMessageDialog(null, "Insertion successful. \nStudent: " + name.getText() +
+                            "\nMajor: " + major.getText() + "\nKey: " + idNum);
+                        System.out.println("Name: " + name.getText() + "\nKey: " + idNum);
+                    }
+                }//end insert functions
+                //Do delete functions
+                else if (selection.getSelectedItem() == "Delete") {
+                    try {
+                        if (id.getText().equals("")) {
+                        JOptionPane.showMessageDialog(null, "Please enter a valid student ID.");
+                        }
+                        else if (database.containsKey(Integer.valueOf(id.getText()))) {
+                            JOptionPane.showMessageDialog(null, "Deletion successful. \nStudent information:" + database.get(Integer.valueOf(id.getText())));
+                            database.remove(Integer.valueOf(id.getText()));
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(null, "Student ID does not exist.  Please try again.");
+                        }
+                    }
+                    catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "Please enter a valid student ID.");
+                    }
+                }//end delete functions
+                //Do search functions
+                else if (selection.getSelectedItem() == "Find") {
+                    try {
+                        if (id.getText().equals("")) {
+                            JOptionPane.showMessageDialog(null, "Please enter a valid student ID.");
+                        }
+                        else if (!database.containsKey(Integer.valueOf(id.getText()))) {
+                            JOptionPane.showMessageDialog(null, "Student ID does not exist.  Please try again.");
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(null, "Student information:" + database.get(Integer.valueOf(id.getText())));
+                        }
+                    }
+                    catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "Please enter a valid student ID.");
+                    }
+                }//end delete functions
+                //Do update functions
+                else if (selection.getSelectedItem() == "Update") {
+                    try {
+                        if (id.getText().equals("")) {
+                            JOptionPane.showMessageDialog (null, "Please enter a valid student ID.");
+                        }
+                        else if (!database.containsKey(Integer.valueOf(id.getText()))) {
+                            JOptionPane.showMessageDialog(null, "Student ID does not exist.  Please try again.");
+                        }
+                        else if (database.containsKey(Integer.valueOf(id.getText()))) {
+                            Student.gradeName = (String) JOptionPane.showInputDialog(
+                            null, "Choose Grade:", "Grade", JOptionPane.QUESTION_MESSAGE, null, gradeString, "A");
+                            String strCredit = (String) JOptionPane.showInputDialog(
+                            null, "Choose Credits:", "Credits", JOptionPane.QUESTION_MESSAGE, null, creditString, "3");
+                            Student.credits = Double.parseDouble(strCredit);
+                            Student.courseCompleted(Student.gradeName, Student.credits);
+                        }
+                    }
+                    catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "Please enter a valid student ID.");
+                    }
+                }//end update functions
+                else if (selection.getSelectedItem() == "Show Hashmap") {
+                    JOptionPane.showMessageDialog(null, database);
+                }
+                name.setText("");
+                major.setText("");
+            }
+        });//end process button
+        setVisible(true);
+    }
+    
+    //Main Method
+    public static void main(String[] args) {
+        StudentDatabase mySchool = new StudentDatabase();
+    }//end main method
+    
+    //Action Listener Override
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+}//end class
