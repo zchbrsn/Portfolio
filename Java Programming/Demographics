@@ -1,0 +1,85 @@
+//File: Demographics
+//Author: Zach Burson
+//Class: CMIS 141
+//Date: 26 May 2016
+//Purpose: Gather demographic information from user
+
+import java.util.Scanner;
+
+		public class Demographics
+		{
+		
+			public static void main(String[] args)
+			{
+				//Loop to repeat information if incorrect
+				int isRight = 2;
+				while(isRight == 2) {
+				
+					Scanner in = new Scanner(System.in);
+			
+					//Declare and initialize variables
+					int birthYear = 0;
+					int birthMonth = 0;
+					int birthDay = 0;
+					double latitude = 0.0000d;
+					double longitude = 0.0000d;
+					float GPA = 0.0f;
+				
+					//Gather user input
+					System.out.println ("Enter your birth year (1900-2014).");
+					birthYear = in.nextInt();
+					System.out.println("Enter you birth month (1-12).");
+					birthMonth = in.nextInt();
+					System.out.println ("Enter your birth day (1-31).");
+					birthDay = in.nextInt();
+					System.out.println ("Enter the latitude of your home address.");
+					latitude = in.nextDouble();
+					System.out.println ("Enter the longitude of your home address.");
+					longitude = in.nextDouble();
+					System.out.println ("Enter your current GPA (0.0-4.0).");
+					GPA = in.nextFloat();
+				
+					//Switch statement to convert birthMonth Int to String
+					String monthString;
+					switch (birthMonth) {
+						case 1: monthString = "January";
+							break;
+						case 2: monthString = "February";
+							break;
+						case 3:  monthString = "March";
+                     		break;
+						case 4:  monthString = "April";
+							break;
+						case 5:  monthString = "May";
+							break;
+						case 6:  monthString = "June";
+							break;
+						case 7:  monthString = "July";
+							break;
+						case 8:  monthString = "August";
+							break;
+						case 9:  monthString = "September";
+							break;
+						case 10: monthString = "October";
+							break;
+						case 11: monthString = "November";
+							break;
+						case 12: monthString = "December";
+							break;
+						default: monthString = "Please enter a number between 1-12";
+							break;
+					}//end switch
+				
+					//Display demographic data
+					System.out.println ("Thank you for your participation.");
+					System.out.println ("You have entered the following data:");
+					System.out.println ("Birthday: " + monthString + " " + birthDay + ", " + birthYear);
+					System.out.println ("Address: Latitude " + latitude + "°, Longitude " + longitude + "°");
+					System.out.println ("Current GPA: " + GPA);
+					System.out.println ("Is this information correct?");
+					System.out.println ("1. Yes");
+					System.out.println ("2. No");
+					isRight = in.nextInt();
+				}//end while
+			}//end main
+		}//end class
