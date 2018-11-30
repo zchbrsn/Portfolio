@@ -1,0 +1,171 @@
+//File: LotteryGameV2
+//Author: Zach Burson
+//Class: CMIS 141
+//Date: 12 Jun 2016
+//Purpose: Play the lottery game
+
+//Import Java utils Random and Scanner
+import java.util.Random;
+import java.util.Scanner;
+
+public class LotteryGameV2 {
+
+	//Main method
+	public static void main(String[] args) {
+		
+		//Create new scanner
+		Scanner in = new Scanner(System.in);
+		
+		//Initialize variables
+		int userDecision = 1;
+		int timesPlay;
+		int whichLottery;
+		int i = 0;
+		int grandTotal = 0;
+		
+		//User input to play lottery game
+		System.out.println("Would you like to play the lottery? \n1. Yes \n2. No");
+		userDecision = in.nextInt();
+		
+		if (userDecision == 1) {
+			
+			//User input to choose which game to play
+			System.out.println("Which lottery would you like to play?");
+			System.out.println("1. Pick 3 \n2. Pick 4 \n3. Pick 5");
+			whichLottery = in.nextInt();
+			
+			if (whichLottery == 1) {
+				pick3();
+			}
+			else if(whichLottery==2) {
+				pick4();
+			}
+			else if(whichLottery==3) {
+				pick5();
+			}
+			else {
+				System.out.println("Invalid selection.");
+			}
+		}//end whichLottery decision
+		else {
+			System.exit(0);
+		}//end userDecision
+	}//end main method
+	
+	//Method for option Pick 3
+	public static void pick3() {
+		
+		//Initialize random number, scanner, and variables
+		Random randNum = new Random();
+		Scanner in = new Scanner(System.in);
+		int i;
+		int j;
+		int sum = 0;
+		int number;
+		int timesPlay = 0;
+		
+		System.out.println("How many games would you like to play?");
+		timesPlay = in.nextInt();
+		
+		//Loop for how many games user would like to play
+		for(j = 0; j < timesPlay; j++) {
+			//Loop to generate 3 random numbers
+			for(i = 0; i < 3; i++) {
+				number = randNum.nextInt(10);
+				if (i == 0) {
+					System.out.println("Your first number is: " + number);
+				}
+				else if(i == 1) {
+					System.out.println("Your second number is: " + number);
+				}
+				else {
+					System.out.println("Your third number is: " + number);
+				}
+				//Sum of selected numbers
+				sum = sum + number;
+			}//end random number loop
+		}//end timesPlay loop
+		System.out.println("The sum of your numbers is: " + sum);
+	}//end method pick3
+	
+	//Method for option Pick 4
+	public static void pick4() {
+		
+		//Initialize random number, scanner, and variables
+		Random randNum = new Random();
+		Scanner in = new Scanner(System.in);
+		int i;
+		int j;
+		int sum = 0;
+		int number;
+		int timesPlay = 0;
+		
+		System.out.println("How many games would you like to play?");
+		timesPlay = in.nextInt();
+		
+		//Loop for how many games user would like to play
+		for(j = 0; j < timesPlay; j++) {
+			//Loop to generate 4 random numbers
+			for(i = 0; i < 4; i++) {
+				number = randNum.nextInt(10);
+				if (i == 0) {
+					System.out.println("Your first number is: " + number);
+				}
+				else if(i == 1) {
+					System.out.println("Your second number is: " + number);
+				}
+				else if(i == 2){
+					System.out.println("Your third number is: " + number);
+				}
+				else {
+					System.out.println("Your fourth number is: " + number);
+				}
+				//Sum of selected numbers
+				sum = sum + number;
+			}//end random number loop
+		}//end timesPlay loop
+		System.out.println("The sum of your numbers is: " + sum);
+	}//end method pick4
+	
+	//Method for option Pick 4
+	public static void pick5() {
+		
+		//Initialize random number, scanner, and variables
+		Random randNum = new Random();
+		Scanner in = new Scanner(System.in);
+		int i;
+		int j;
+		int sum = 0;
+		int number;
+		int timesPlay = 0;
+		
+		System.out.println("How many games would you like to play?");
+		timesPlay = in.nextInt();
+		
+		//Loop for how many games user would like to play
+		for(j = 0; j < timesPlay; j++) {
+			//Loop to generate 4 random numbers
+			for(i = 0; i < 5; i++) {
+				number = randNum.nextInt(10);
+				if (i == 0) {
+					System.out.println("Your first number is: " + number);
+				}
+				else if(i == 1) {
+					System.out.println("Your second number is: " + number);
+				}
+				else if(i == 2){
+					System.out.println("Your third number is: " + number);
+				}
+				else if(i == 3){
+					System.out.println("Your fourth number is: " + number);
+				}
+				else {
+					System.out.println("Your fifth number is: " + number);
+				}
+				//Sum of selected numbers
+				sum = sum + number;
+			}//end random number loop
+		}//end timesPlay loop
+		System.out.println("The sum of your numbers is: " + sum);
+	}//end method pick5
+}//end class LotteryGameV2
