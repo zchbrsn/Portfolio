@@ -1,0 +1,117 @@
+********** BMI CALC WINDOW CLASS **********
+
+import javax.swing.*;
+import java.awt.*;
+
+public class BMICalc extends JPanel{
+    
+    public JFrame myFrame = new JFrame();
+    public IOPanel ioPanel = new IOPanel (this);
+    public ButtonsPanel btnPanel = new ButtonsPanel(this);
+    public BMICalc() {
+        myFrame.setSize(400, 200);
+        myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        myFrame.setVisible(true);
+        setLayout(new BorderLayout());
+        setBackground(Color.yellow);
+        myFrame.add(ioPanel, BorderLayout.CENTER);
+        myFrame.add(btnPanel, BorderLayout.SOUTH);
+    }
+
+}
+
+********** BMI CALC CLASS **********
+
+public class CalculateBMI {
+    
+    public float calculateBMI(float weight, float height) {
+        weight = (float) (weight * 0.45);
+        height = (float) (height * 0.025);
+        height = height * height;
+        return weight/height;
+    }
+}
+
+********** IO PANEL CLASS **********
+
+import javax.swing.*;
+import java.awt.*;
+
+public class IOPanel extends JPanel{
+    
+    private BMICalc bmiPanel;
+    
+    private JLabel weightLbl = new JLabel("Weight", JLabel.CENTER);
+    private JLabel heightLbl = new JLabel("Height", JLabel.CENTER);
+    private JLabel bmiLbl = new JLabel("BMI", JLabel.CENTER);
+    private JTextField weightTxt = new JTextField("Enter weight in lbs");
+    private JTextField heightTxt = new JTextField("Enter height in inches");
+    private JTextField bmiTxt = new JTextField("");
+    
+    public IOPanel(BMICalc bmiPanel) {
+        this.bmiPanel = bmiPanel;
+        setLayout(new GridLayout(2, 3));
+        bmiTxt.setBackground(Color.lightGray);
+        bmiTxt.setEditable(false);
+        add(weightLbl); add(heightLbl); add(bmiLbl);
+        add(weightTxt); add(heightTxt); add(bmiTxt);        
+    }
+    
+    float getWeightTxt() {return Float.parseFloat(weightTxt.getText());}
+    float getHeightTxt() {return Float.parseFloat(heightTxt.getText());}
+    void setBMITxt(float bmi) {bmiTxt.setText(String.valueOf(bmi));}
+    
+}
+
+********** BUTTON CLASS **********
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class ButtonsPanel extends JPanel implements ActionListener{
+    
+    private CalculateBMI calcBMI;
+    private BMICalc bmiPanel;
+    private JButton calcBtn = new JButton("Calculate");
+    
+    public ButtonsPanel(BMICalc bmiPanel) {
+        this.bmiPanel = bmiPanel;
+        setLayout(new FlowLayout(FlowLayout.CENTER));
+        calcBtn.setToolTipText("Calculate BMI");
+        add(calcBtn);
+        calcBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                calcBMI = new CalculateBMI();
+                bmiActionBtn();}
+        });
+    }
+    
+    public void bmiActionBtn () {
+        float weight = bmiPanel.ioPanel.getHeightTxt();
+        float height = bmiPanel.ioPanel.getWeightTxt();
+        weight = (float) (weight * 0.45);
+        height = (float) (height * 0.025);
+        height = height * height;
+        bmiPanel.ioPanel.setBMITxt(weight / height);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+}
+
+********** MAIN CLASS **********
+
+public class TestBMICalc {
+    
+    public static void main(String[] args) {
+        
+        BMICalc calc1 = new BMICalc();
+        
+    }
+    
+}
