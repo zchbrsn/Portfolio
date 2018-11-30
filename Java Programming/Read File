@@ -1,0 +1,62 @@
+//File: ReadDataFile
+//Author: Zach Burson
+//Class: CMIS 141
+//Date: 05 Jul 16
+//Purpose: Read data from a file and display as well as calculate how many data values read
+
+//Import java IO and Scanner classes
+import java.io.*;
+import java.util.Scanner;
+
+public class ReadDataFile {
+
+    public static void main(String[] args) throws IOException {
+		
+		/*//Initialize variables
+        BufferedReader inputRead = null;
+		int dataSum = 0;
+		
+		//Try block
+        try {
+            String readLine;
+            inputRead = new BufferedReader(new FileReader("datalog.txt"));
+			//While loop to output info from file
+            while ((readLine = inputRead.readLine()) != null) {
+                System.out.println(readLine);
+				dataSum ++;
+            }//end while loop
+			//Calculate data values read / times looped
+			System.out.println(dataSum + " data values were read.");
+        }//end try block
+		//Catch block
+		catch (IOException ex) {
+            ex.printStackTrace();
+        }//end catch block
+		//Finally block
+		finally {
+            if (inputRead != null) {
+                inputRead.close();
+            }//end if
+        }//end finally block*/
+
+		//Below is scrapped data that would not work for me.  I managed to get it to work after I completed above code
+		
+        int dataSum = 0;
+        Scanner inputRead = null;
+
+        try {
+            inputRead = new Scanner(new BufferedReader(new FileReader("datalog.txt")));
+
+            while (inputRead.hasNext()) {
+                System.out.println(inputRead.next());
+                dataSum++;
+            }
+			System.out.println(dataSum + " data values were read.");
+        } finally {
+            if (inputRead != null) {
+                inputRead.close();
+            }
+        }
+		
+    }//end main
+}//end class
