@@ -1,0 +1,64 @@
+//File: MovieRater
+//Author: Zach Burson
+//Class: CMIS 141
+//Date: 16 Jun 2016
+//Purpose: Allow user to input favorite movies and rate them 1-5 stars
+
+//Import Scanner
+import java.util.Scanner;
+
+public class MovieRater {
+
+	public static void main(String[] args) {
+		
+		//Initialize variables and Scanners
+		int userDecision = 0;
+		int userLength = 0;
+		Scanner decision = new Scanner(System.in);
+		Scanner movie = new Scanner(System.in);
+		
+		//Program loop
+		while(userDecision != 1){
+			System.out.println("Welcome to the Movie Rater.");
+			
+			//Prompt user to input number of movies they would like to rate
+			System.out.println("Please enter how many movies you would like to rate.");
+			userLength = decision.nextInt();
+			
+			//Arrays to capture user input
+			String[] movieName = new String[userLength];
+			Integer[] movieStars = new Integer[userLength];
+			
+			System.out.println("First, enter " + movieName.length + " of your favorite movies");
+			
+			//For loop to capture user input for movie name
+			for(int i = 0; i < movieName.length; i++){
+				movieName[i] = movie.nextLine();
+			}//end capture movie name
+			
+			//For loop to print movies entered
+			System.out.println("You entered:");
+			for(int i = 0; i < movieName.length; i++){
+				System.out.println(movieName[i]);
+			}//end print movies entered
+			
+			//For loop to capture user input for star ratings according to movie name
+			for(int i = 0; i < movieStars.length; i++){
+				System.out.println("What would you rate '" + movieName[i] + "'?");
+				movieStars[i] = movie.nextInt();
+			}//end capture star ratings
+			
+			//For loop with movie names and ratings
+			for(int i = 0; i < movieStars.length; i++){
+				System.out.println("You rated '" + movieName[i] + "' a " + movieStars[i] + ".");
+			}//end print movie names and ratings
+			
+			//Prompt user to exit, or restart program
+			System.out.println("Press any key to restart the program.\nPress 1 to quit.");
+			userDecision = decision.nextInt();
+			
+		}//end while
+
+	}//end main
+	
+}//end class
