@@ -1,0 +1,133 @@
+//File: Oven
+//Author: Zach Burson
+//Class: CMIS 141
+//Date: 23 Jun 2016
+//Purpose: Oven object
+
+import java.util.Scanner;
+import java.util.InputMismatchException;
+
+public class Oven {
+
+    public static final int MIN_TEMP = 1;
+    public static final int MAX_TEMP = 500;
+    public static final double MIN_TIME = 0.0;
+    boolean isOn;
+    int cookTemp;
+    int cookTime;
+
+    public Oven() {
+        boolean isOn = false;
+        int cookTemp = 0;
+        int cookTime = 0;
+    }
+
+    public void setPowerOn(boolean power) {
+        isOn = power;
+    }
+
+    public void setCookTemp(int temp) {
+        cookTemp = temp;
+    }
+
+    public void setCookTime(int time) {
+        cookTime = time;
+    }
+
+    public void startOven() {
+
+        if (isOn == true) {
+            
+            String food;
+            int temp;
+            int time;
+            boolean userDecision = false;
+            Scanner in = new Scanner(System.in);
+            
+            System.out.println("What would you like to cook?");
+            food = in.nextLine();
+
+            System.out.println("Please enter desired temperature.");
+            while (userDecision == false) {
+                try {
+                    temp = in.nextInt();
+                    if ((temp <= MAX_TEMP) && (temp >= MIN_TEMP)) {
+                        userDecision = true;
+                    } else {
+                        System.out.println("Please enter a temperature between 1-" + MAX_TEMP + ".");
+                    }
+                } catch (InputMismatchException ex) {
+                    System.out.println("Invalid entry.");
+                    String flush = in.next();
+                }
+            }
+
+            System.out.println("Please enter desired cooking time (minutes).");
+            userDecision = false;
+            while (userDecision == false) {
+                try {
+                    time = in.nextInt();
+                    if (time >= MIN_TIME) {
+                        userDecision = true;
+                    }
+                    else {
+                        System.out.println("Please enter a time > 0.");
+                    }
+                } catch (InputMismatchException ex) {
+                    System.out.println("Invalid entry.");
+                    String flush = in.next();
+                }
+            }
+            
+            System.out.println("Your " + food + " finished cooking.  Enjoy your meal.");
+        }
+    }
+}
+
+********** MAIN CLASS **********
+
+//File: TestOven
+//Author: Zach Burson
+//Class: CMIS 141
+//Date: 23 Jun 2016
+//Purpose: Test Oven class
+
+import java.util.Scanner;
+import java.util.InputMismatchException;
+
+public class TestOven {
+
+    public static void main(String[] args) {
+
+        Oven myOven = new Oven();
+        Scanner in = new Scanner(System.in);
+        int power;
+        boolean userDecision = false;
+
+        while (userDecision == false) {
+
+            System.out.println("Would you like to use the oven?");
+            System.out.println("1. Yes\n2. No");
+
+            try {
+                power = in.nextInt();
+                if (power == 1) {
+                    myOven.setPowerOn(true);
+                } else if (power == 2) {
+                    myOven.setPowerOn(false);
+                    System.out.println("Please come back when you are ready to use the oven.");
+                    break;
+                }
+            } 
+            catch (InputMismatchException ex) {
+                System.out.println("Invalid entry.");
+                String flush = in.next();
+            }
+            
+            myOven.startOven();
+            break;
+        }
+
+    }
+
+}
