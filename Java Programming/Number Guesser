@@ -1,0 +1,47 @@
+//File: NumberGuesser
+//Author: Zach Burson
+//Class: CMIS 141
+//Date: 24 May 2016
+//Purpose: User enters number 1-10 and depending on the number, guesses the lucky number
+
+import java.util.Scanner;
+
+	public class NumberGuesser
+	{
+		public static void main(String[] args)
+		{
+			int userNumber = 0;
+			int playAgain = 1;
+			
+			Scanner in = new Scanner(System.in);
+			
+			while(playAgain == 1)
+			{
+				System.out.println("Enter a number between 1 and 10");
+				userNumber = in.nextInt();
+				System.out.println("You entered " + userNumber);
+			
+				switch(userNumber) {
+					case 1: case 2: case 9: case 10:
+						System.out.println("Your guess is totally wrong!");
+						break;
+					case 3: case 8:
+						System.out.println("Close, but no cigar!");
+						break;
+					case 4: case 5: case 7:
+						System.out.println("You are so close! Almost had it!");
+					case 6:
+						System.out.println("You guessed it! The magic number is 6!");
+						break;
+					default:
+						System.out.println("You entered an invalid number, please pick 1-10");
+						}//end switch(userNumber)
+					
+				System.out.println("Would you like to play again?");
+				System.out.println("1: Yes");
+				System.out.println("2: No");
+				playAgain = in.nextInt();
+				
+			}//end while
+		}//end main
+	}//end class
