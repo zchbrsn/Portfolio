@@ -1,0 +1,55 @@
+
+public class Animal {
+    
+    private String color;
+    private String diet;
+    private int age;
+    
+    Animal(String color, String diet, int age) {
+        this.color = color;
+        this.diet = diet;
+        this.age = age;
+    }
+    
+    public String toString() {
+        return "\nColor: " + color + "\nDiet: " + diet + "\nAge: " + age;
+    }
+    
+    public void output() {
+        System.out.println("Animal class - " + this);
+    }
+    
+public class Dog extends Animal {
+        
+    private String breed;
+        
+    Dog(String color, String diet, int age, String breed) {
+            super(color, diet, age);
+            this.breed = breed;
+        }
+        
+    public String toString() {
+        return super.toString() + "\nBreed: " + breed;
+    }
+    
+    public void output() {
+        System.out.println("Dog subclass - " + this);
+    }
+    
+}
+
+}
+
+********** MAIN CLASS **********
+
+
+public class TestAnimal {
+
+    public static void main(String[] args) {
+        
+        Dog myDog = new Dog("Black", "Omnivore", 7, "Labrador Retriever");
+        Dog.output();
+        
+    }
+    
+}
