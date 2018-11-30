@@ -1,0 +1,454 @@
+//File: Titanic
+//Author: Zach Burson
+//Class: CMIS 141
+//Date: 05 Jul 2016
+//Purpose: Class to process data for user from file Titanic.txt
+
+//Import classes
+import java.io.*;
+import java.text.*;
+import java.time.*;
+
+public class Titanic {
+
+    //Initialize variables
+    private double paxClass;
+    private double paxClassSurvived;
+    private double paxClassTotal;
+    private double paxClassPercent;
+    private double paxSurvived;
+    private double paxPerished;
+    private double paxSurvivedTotal;
+    private double paxSurvivedPercent;
+    private double totalPax;
+    private double paxAge;
+    private double paxAgeTotal;
+    private double paxAgeAvg;
+    private double paxFare;
+    private double paxFareTotal;
+    private char paxName;
+    private String line;
+    private LocalTime startTime;
+    private LocalTime stopTime;
+    private long elapsedTime;
+    private int A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z;
+
+    //Format for limiting double decimal spaces
+    DecimalFormat df = new DecimalFormat("#.##");
+    DecimalFormat df1 = new DecimalFormat("#");
+
+    //Default constructor to initialize start time
+    public Titanic() {
+        startTime = LocalTime.now();
+    }//end constructor
+
+    //Calculate total passengers on board
+    public void calcTotalPax() throws IOException {
+        BufferedReader inputStream = new BufferedReader(new FileReader("titanic.txt"));
+        while ((line = inputStream.readLine()) != null) {
+            try {
+                totalPax++;
+            }//end try 
+            catch (ArrayIndexOutOfBoundsException ex) {
+            }//end catch
+        }//end while
+        totalPax = totalPax - 1;
+        System.out.println("There were " + df1.format(totalPax) + " total passengers on board.");
+        totalPax = 0;
+    }//end calcTotalPax
+
+    //Calculate percent of passengers that perished
+    public void calcPaxPerished() throws IOException {
+        BufferedReader inputStream = new BufferedReader(new FileReader("titanic.txt"));
+        while ((line = inputStream.readLine()) != null) {
+            try {
+                String[] columns = line.split("\t");
+                paxSurvived = Double.parseDouble(columns[1]);
+                if (paxSurvived == 0) {
+                    paxPerished++;
+                }//end if
+                paxSurvivedTotal++;
+            }//end try
+            catch (ArrayIndexOutOfBoundsException ex) {
+            }//end catch
+        }//end while
+        paxSurvivedPercent = (paxPerished * 100) / paxSurvivedTotal;
+        System.out.println(df.format(paxSurvivedPercent) + "% of passengers perished. " + df1.format(paxPerished) + " out of " + df1.format(paxSurvivedTotal) + ".");
+        paxSurvived = 0;
+        paxPerished = 0;
+        paxSurvivedTotal = 0;
+        paxSurvivedPercent = 0;
+    }//end calcPaxPerished
+
+    //Calculate percent of passengers that survived
+    public void calcPaxSurvived() throws IOException {
+        BufferedReader inputStream = new BufferedReader(new FileReader("titanic.txt"));
+        while ((line = inputStream.readLine()) != null) {
+            try {
+                String[] columns = line.split("\t");
+                paxSurvived = Double.parseDouble(columns[1]);
+                if (paxSurvived == 1) {
+                    paxPerished++;
+                }//end if
+                paxSurvivedTotal++;
+            }//end try
+            catch (ArrayIndexOutOfBoundsException ex) {
+            }//end catch
+        }//end while
+        paxSurvivedPercent = (paxPerished * 100) / paxSurvivedTotal;
+        System.out.println(df.format(paxSurvivedPercent) + "% of passengers survivedr. " + df1.format(paxPerished) + " out of " + df1.format(paxSurvivedTotal) + ".");
+        paxSurvived = 0;
+        paxPerished = 0;
+        paxSurvivedTotal = 0;
+        paxSurvivedPercent = 0;
+    }//end calcPaxSurvived
+
+    //Calculate percent of First Class passengers that survived
+    public void calcFirstClass() throws IOException {
+        BufferedReader inputStream = new BufferedReader(new FileReader("titanic.txt"));
+        while ((line = inputStream.readLine()) != null) {
+            try {
+                String[] columns = line.split("\t");
+                paxClass = Double.parseDouble(columns[0]);
+                paxSurvived = Double.parseDouble(columns[1]);
+                if (paxClass == 1 && paxSurvived == 1) {
+                    paxClassSurvived++;
+                }//end if
+                if (paxClass == 1) {
+                    paxClassTotal++;
+                }//end if
+            }//end try 
+            catch (ArrayIndexOutOfBoundsException ex) {
+            }//end catch
+        }//end while
+        paxClassPercent = (paxClassSurvived * 100) / (paxClassTotal);
+        System.out.println(df.format(paxClassPercent) + "% of First Class passengers survived. " + df1.format(paxClassSurvived) + " out of " + df1.format(paxClassTotal));
+        paxClass = 0;
+        paxSurvived = 0;
+        paxClassSurvived = 0;
+        paxClassTotal = 0;
+        paxClassPercent = 0;
+    }//end calcFirstClass
+
+    //Calculate percent of Second Class passengers that survived
+    public void calcSecondClass() throws IOException {
+        BufferedReader inputStream = new BufferedReader(new FileReader("titanic.txt"));
+        while ((line = inputStream.readLine()) != null) {
+            try {
+                String[] columns = line.split("\t");
+                paxClass = Double.parseDouble(columns[0]);
+                paxSurvived = Double.parseDouble(columns[1]);
+                if (paxClass == 2 && paxSurvived == 1) {
+                    paxClassSurvived++;
+                }//end if
+                if (paxClass == 2) {
+                    paxClassTotal++;
+                }//end if
+            }//end try
+            catch (ArrayIndexOutOfBoundsException ex) {
+            }//end catch
+        }//end while
+        paxClassPercent = (paxClassSurvived * 100) / (paxClassTotal);
+        System.out.println(df.format(paxClassPercent) + "% of Second Class passengers survived. " + df1.format(paxClassSurvived) + " out of " + df1.format(paxClassTotal));
+        paxClass = 0;
+        paxSurvived = 0;
+        paxClassSurvived = 0;
+        paxClassTotal = 0;
+        paxClassPercent = 0;
+    }//end calcSecondClass
+
+    //Calculate percent of Third Class passengers that survived
+    public void calcThirdClass() throws IOException {
+        BufferedReader inputStream = new BufferedReader(new FileReader("titanic.txt"));
+        while ((line = inputStream.readLine()) != null) {
+            try {
+                String[] columns = line.split("\t");
+                paxClass = Double.parseDouble(columns[0]);
+                paxSurvived = Double.parseDouble(columns[1]);
+                if (paxClass == 3 && paxSurvived == 1) {
+                    paxClassSurvived++;
+                }//end if
+                if (paxClass == 3) {
+                    paxClassTotal++;
+                }//end if
+            }//end try
+            catch (ArrayIndexOutOfBoundsException ex) {
+            }//end catch
+        }//end while
+        paxClassPercent = (paxClassSurvived * 100) / (paxClassTotal);
+        System.out.println(df.format(paxClassPercent) + "% of Third Class passengers survived. " + df1.format(paxClassSurvived) + " out of " + df1.format(paxClassTotal));
+        paxClass = 0;
+        paxSurvived = 0;
+        paxClassSurvived = 0;
+        paxClassTotal = 0;
+        paxClassPercent = 0;
+    }//end calcThirdClass
+
+    //Lists the passengers under the age of 10 that survived
+    public void survivorsUnderTen() throws IOException {
+        BufferedReader inputStream = new BufferedReader(new FileReader("titanic.txt"));
+        System.out.println("The following passengers were less than 10 years old:");
+        while ((line = inputStream.readLine()) != null) {
+            try {
+                String[] columns = line.split("\t");
+                paxAge = Double.parseDouble(columns[4]);
+                paxSurvived = Double.parseDouble(columns[1]);
+                if (paxAge < 10 && paxSurvived == 1) {
+                    System.out.println(columns[2]);
+                }//end if
+            }//end try
+            catch (ArrayIndexOutOfBoundsException ex) {
+            }//end catch
+            catch (NumberFormatException e) {
+            }//end catch
+        }//end while
+        paxAge = 0;
+        paxSurvived = 0;
+    }//end survivorsUnderTen
+
+    //Lists number of passengers based on first letter of last name
+    //I would like some advice for another way to go about this, only thing I could think of
+    public void countLastName() throws IOException {
+        BufferedReader inputStream = new BufferedReader(new FileReader("titanic.txt"));
+        while ((line = inputStream.readLine()) != null) {
+            try {
+                String[] columns = line.split("\t");
+                paxName = columns[2].charAt(0);
+                switch (paxName) {
+                    case 'A':
+                        A++;
+                        break;
+                    case 'B':
+                        B++;
+                        break;
+                    case 'C':
+                        C++;
+                        break;
+                    case 'D':
+                        D++;
+                        break;
+                    case 'E':
+                        E++;
+                        break;
+                    case 'F':
+                        F++;
+                        break;
+                    case 'G':
+                        G++;
+                        break;
+                    case 'H':
+                        H++;
+                        break;
+                    case 'I':
+                        I++;
+                        break;
+                    case 'J':
+                        J++;
+                        break;
+                    case 'K':
+                        K++;
+                        break;
+                    case 'L':
+                        L++;
+                        break;
+                    case 'M':
+                        M++;
+                        break;
+                    case 'N':
+                        N++;
+                        break;
+                    case 'O':
+                        O++;
+                        break;
+                    case 'P':
+                        P++;
+                        break;
+                    case 'Q':
+                        Q++;
+                        break;
+                    case 'R':
+                        R++;
+                        break;
+                    case 'S':
+                        S++;
+                        break;
+                    case 'T':
+                        T++;
+                        break;
+                    case 'U':
+                        U++;
+                        break;
+                    case 'V':
+                        V++;
+                        break;
+                    case 'W':
+                        W++;
+                        break;
+                    case 'X':
+                        X++;
+                        break;
+                    case 'Y':
+                        Y++;
+                        break;
+                    case 'Z':
+                        Z++;
+                        break;
+                }//end switch
+            }//end try
+            catch (ArrayIndexOutOfBoundsException ex) {
+            }//end catch
+        }//end while
+        System.out.println("A: " + A + "\nB: " + B + "\nC: " + C + "\nD: " + D
+                + "\nE: " + E + "\nF: " + F + "\nG: " + G + "\nH: " + H + "\nI: " + I
+                + "\nJ: " + J + "\nK: " + K + "\nL: " + L + "\nM: " + M + "\nN: " + N
+                + "\nO: " + O + "\nP: " + P + "\nQ: " + Q + "\nR: " + R + "\nS: " + S
+                + "\nT: " + T + "\nU: " + U + "\nV: " + V + "\nW: " + W + "\nX: " + X
+                + "\nY: " + Y + "\nZ: " + Z);
+    }//end countLastName
+
+    //Calculates the average age of all passengers
+    public void calcAgeAvg() throws IOException {
+        BufferedReader inputStream = new BufferedReader(new FileReader("titanic.txt"));
+        while ((line = inputStream.readLine()) != null) {
+            totalPax++;
+            try {
+                String[] columns = line.split("\t");
+                paxAge = Double.parseDouble(columns[4]);
+                paxAgeTotal += paxAge;
+            }//end try
+            catch (ArrayIndexOutOfBoundsException ex) {
+            }//end catch
+            catch (NumberFormatException e) {
+            }//end catch
+        }//end while
+        totalPax -= 1;
+        paxAgeAvg = paxAgeTotal / totalPax;
+        System.out.println("The average age of all passengers is " + df.format(paxAgeAvg));
+        totalPax = 0;
+        paxAge = 0;
+        paxAgeTotal = 0;
+        paxAgeAvg = 0;
+    }//end calcAgeAvg
+
+    //Calculates the total fare from all passengers
+    public void calcFareTotal() throws IOException {
+        BufferedReader inputStream = new BufferedReader(new FileReader("titanic.txt"));
+        while ((line = inputStream.readLine()) != null) {
+            try {
+                String[] columns = line.split("\t");
+                paxFare = Double.parseDouble(columns[5]);
+                paxFareTotal += paxFare;
+            }//end try
+            catch (ArrayIndexOutOfBoundsException ex) {
+            }//end catch
+        }//end while
+        System.out.println("The grand total fare from all passengers is $" + df.format(paxFareTotal));
+        paxFare = 0;
+        paxFareTotal = 0;
+    }//end calcFareTotal
+
+    //Stops time and calculates elapsed time since start
+    public void calcElapsedTime() {
+        stopTime = LocalTime.now();
+        elapsedTime = Duration.between(startTime, stopTime).toNanos();
+        elapsedTime = elapsedTime / 1000000000;
+        System.out.println("This program ran for " + elapsedTime + " seconds.");
+    }//end calcElapsedTime
+}//end class
+
+********** MAIN CLASS **********
+
+//File: TestTitanic
+//Author: Zach Burson
+//Class: CMIS 141
+//Date: 05 Jul 2016
+//Purpose: Test Titanic class
+
+//Import classes
+import java.io.*;
+import java.util.*;
+
+public class TestTitanic {
+
+    public static void main(String[] args) throws IOException {
+
+        //Command line arguments statement
+        if (args.length > 0) {
+
+            //Create new objects
+            File myFile = new File(args[0]);
+            Titanic myTitanic = new Titanic();
+            Scanner in = new Scanner(System.in);
+
+            //Initialize variables
+            int userDecision = 0;
+            char quitProgram = 'z';
+
+            //Welcome message
+            System.out.println("Welcome to the Titanic Statistical Application");
+
+            //While loop for program options
+            while (quitProgram != 'Q') {
+                try {
+                    System.out.println("Please select from the following menu:");
+                    System.out.println("1. How many passengers were on the Titanic?\n"
+                            + "2. What percentage of passengers perished on the Titanic?\n"
+                            + "3. What percentage of passengers survived the sinking of the Titanic?\n"
+                            + "4. What percentage of passengers survived for each of the three classes?\n"
+                            + "5. What specific passengers who were less than 10 years old surived the sinking of the Titanic?\n"
+                            + "6. For each letter in the alphabet, how many passengers last names started with that letter?\n"
+                            + "7. What was the average age of all the passengers?\n"
+                            + "8. What was the total fare for all passengers?\n"
+                            + "Q. Quit the program");
+                    userDecision = in.nextInt();
+                    if (userDecision > 0 && userDecision < 9) {
+                        switch (userDecision) {
+                            case 1:
+                                myTitanic.calcTotalPax();
+                                break;
+                            case 2:
+                                myTitanic.calcPaxPerished();
+                                break;
+                            case 3:
+                                myTitanic.calcPaxSurvived();
+                                break;
+                            case 4:
+                                myTitanic.calcFirstClass();
+                                myTitanic.calcSecondClass();
+                                myTitanic.calcThirdClass();
+                                break;
+                            case 5:
+                                myTitanic.survivorsUnderTen();
+                                break;
+                            case 6:
+                                myTitanic.countLastName();
+                                break;
+                            case 7:
+                                myTitanic.calcAgeAvg();
+                                break;
+                            case 8:
+                                myTitanic.calcFareTotal();
+                                break;
+                        }//end switch
+                    }//end if
+                    else if (userDecision <= 0 || userDecision >= 9) {
+                        System.out.println("Invalid option.");
+                    }
+                }//end try
+                catch (InputMismatchException ex) {
+                    quitProgram = in.next().charAt(0);
+                    if (quitProgram == 'Q') {
+                        break;
+                    }//end if
+                    System.out.println("Invalid option.");
+                }//end cattch
+            }//end while loop
+            //Elapsed time at end of program
+            myTitanic.calcElapsedTime();
+
+        }//end command line args if 
+        else {
+            System.out.println("You entered " + args[0] + ".  Please load file titanic.txt");
+        }//end if else
+    }
+}
