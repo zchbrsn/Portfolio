@@ -1,0 +1,205 @@
+//File: Employee
+//Author: Zach Burson
+//Class: CMIS 242
+//Date: 06 Nov 2016
+//Purpose: Calculate/store employees and salaries
+
+//Parent class Employee
+public class Employee {
+    
+    //Initialize private variables
+    private String fullName;
+    private double monthlySalary;
+    private double annualSalary;
+    
+    //Argument constructor
+    public Employee(String fullName, double monthlySalary) {
+        this.fullName = fullName;
+        this.monthlySalary = monthlySalary;
+    }
+    
+    //Calculate annual salary
+    public double annualSalary() {
+        annualSalary = monthlySalary * 12;
+        //Shows issue with monthly salary
+        System.out.println("Error! Monthly salary for Employee is showing: " + monthlySalary);
+        return annualSalary;
+    }
+    
+    public double getAnnualSalary() {
+        return annualSalary;
+    }
+
+    public String toString() {
+        return "Employee Name: " + this.fullName + "\nMonthly Salary: " + this.monthlySalary;
+    }
+    
+    //Displays information contained in this class
+    public void output() {
+        System.out.println(this);
+    } 
+}//End class
+
+********** EXECUTIVE CLASS **********
+
+//File: Employee
+//Author: Zach Burson
+//Class: CMIS 242
+//Date: 06 Nov 2016
+//Purpose: Calculate/store employees and salaries
+
+//Subclass of Employee
+public class Executive extends Employee {
+    
+    //Initialize private variabels
+    private double stockPrice;
+    private double annualSalary;
+    private double monthlySalary;
+    
+    //Argument constructor
+    public Executive(String fullName, double monthlySalary, double stockPrice) {
+        super(fullName, monthlySalary);
+        this.stockPrice = stockPrice;
+    }
+
+    //Calculate annual salary
+    public double annualSalary() {
+        if (stockPrice > 50) {
+            annualSalary = (monthlySalary * 12) + 30000;
+        }//End if
+        else {
+            annualSalary = monthlySalary * 12;
+        }//End else
+        //Shows issue with monthly salary
+        System.out.println("Error! Monthly Salary for Executive is showing: " + monthlySalary);
+        return annualSalary;
+    }
+    
+    public double getAnnualSalary() {
+        return annualSalary;
+    }
+    
+    public String toString() {
+        return super.toString() + "\nStock Price: " + this.stockPrice;
+    }
+    
+    //Displays information contained in this subclass
+    public void output() {
+        System.out.println(this);
+    }
+}//End class
+
+********** SALESMAN CLASS **********
+
+//File: Employee
+//Author: Zach Burson
+//Class: CMIS 242
+//Date: 06 Nov 2016
+//Purpose: Calculate/store employees and salaries
+
+//Subclass of Employee
+public class Salesman extends Employee {
+    
+    //Initialize private variables
+    private double annualSales;
+    private double commission;
+    private double annualSalary;
+    private double monthlySalary;
+    
+    //Argument constructor
+    public Salesman(String fullName, double monthlySalary, double annualSales) {
+        super(fullName, monthlySalary);
+        this.annualSales = annualSales;
+    }
+
+    //Calculate annual salary
+    public double annualSalary() {
+        commission = (annualSales * .02);
+        if (commission >= 20000) {
+            annualSalary = (monthlySalary * 12) + 20000;
+        }//End if
+        else {
+            annualSalary = (monthlySalary * 12) + (annualSales * .02);
+        }//End else
+        //Shows issue with monthly salary
+        System.out.println("Error! Monthly Salary for Salesman is showing: " + monthlySalary);
+        return annualSalary;
+    }
+    
+    public double getAnnualSalary() {
+        return annualSalary;
+    }
+    
+    public String toString() {
+        return super.toString() + "\nAnnual Sales: " + this.annualSales;
+    }
+    
+    //Displays information contained in this subclass
+    public void output() {
+        System.out.println(this);
+    }
+}//End class
+
+********** MAIN CLASS **********
+
+//File: Employee
+//Author: Zach Burson
+//Class: CMIS 242
+//Date: 06 Nov 2016
+//Purpose: Create a list of employees from a file, list employee information, calculate salaries
+
+//Import Java utilities
+import java.io.*;
+
+public class TestEmployee {
+    
+    //main method
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+        
+        //Object array
+        Employee [] employees = new Employee [21];
+        
+        BufferedReader br = new BufferedReader(new FileReader("employees.txt"));
+        
+        //Initialize variables
+        String line;
+        int num = 0;
+        double avgSalary = 0;
+
+        //Loop to read file
+        while ((line = br.readLine()) != null) {
+            String[] columns = line.split("\t");
+            int year = Integer.parseInt(columns[0]);
+            
+            //If else if statements to sort employee types
+            if ("Employee".equals(columns[1])) {
+                //System.out.println("0" + columns[0] + "\n1" + columns[1] + "\n2" + columns[2] + "\n3" + columns[3]);
+                employees[num] = new Employee(columns[2], Double.parseDouble(columns[3]));
+            }
+            
+            else if ("Salesman".equals(columns[1])) {
+                //System.out.println("0" + columns[0] + "\n1" + columns[1] + "\n2" + columns[2] + "\n3" + columns[3] + "\n4" + columns[4]);
+                employees[num] = new Salesman(columns[2], Double.parseDouble(columns[3]), Double.parseDouble(columns[4]));
+            }
+            
+            else if ("Executive".equals(columns[1])) {
+                //System.out.println("0" + columns[0] + "\n1" + columns[1] + "\n2" + columns[2] + "\n3" + columns[3] + "\n4" + columns[4]);
+                employees[num] = new Executive(columns[2], Double.parseDouble(columns[3]), Double.parseDouble(columns[4]));
+            }
+            
+            //Print information and increment
+            System.out.println("Year: " + year);
+            employees[num].annualSalary();
+            employees[num].output();
+            avgSalary = avgSalary + employees[num].getAnnualSalary();
+            System.out.println("Annual Salary: " + employees[num].getAnnualSalary());
+            num++;
+        }//End read file loop
+        
+        //Calculate and print total average salary
+        avgSalary = avgSalary / num;
+        System.out.println("Total Average Salary: " + avgSalary);
+        
+    }//End main method
+
+}//End class
