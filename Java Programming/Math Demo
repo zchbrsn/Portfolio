@@ -1,0 +1,29 @@
+//File: MyMathDemo
+//Author: Zach Burson
+//Class: CMIS 141
+//Date: 30 May 2016
+//Purpose: Create a demo for hands-on lab
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class MyMathDemo{
+	public static void main(String[] args){
+		
+		int sideA;
+		int sideB;
+		int baseInt;
+		int expInt;
+		
+		double lott1 = (int) (Math.random() * 36) + 1;
+		double lott2 = (int) (Math.random() * 36) + 1;
+		double lott3 = (int) (Math.random() * 36) + 1;
+		double lott4 = (int) (Math.random() * 36) + 1;
+		double lott5 = (int) (Math.random() * 36) + 1;
+		
+		Scanner in = new Scanner(System.in);
+
+		System.out.println("Your lottery numbers are:" + lott1 + ", " + lott2 + ", " + lott3 + ", " + lott4 + ", " + lott5);
+		
+	}
+}
