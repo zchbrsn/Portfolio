@@ -1,0 +1,268 @@
+//File: Guitar
+//Author: Zach Burson
+//Class: CMIS 141
+//Date: 29 Jun 2016
+//Purpose: Create a standard classical guitar
+
+public class Guitar {
+    
+    boolean isPlaying = false;
+    boolean isTuned = false;
+    boolean hasCapo = false;
+    public static final int NUMBER_OF_STRINGS = 6;
+    public static final int NUMBER_OF_FRETS = 19;
+    public static final char[] STRING_NOTES = {'E', 'A', 'D', 'G', 'B', 'E',};
+    public String brandGuitar;
+    public String colorGuitar;
+    private int fingerOne;
+    private int fingerTwo;
+    private int fingerThree;
+    private int fingerFour;
+    private int fingerFive;
+    
+    public Guitar() {
+        isPlaying = false;
+        isTuned = false;
+        hasCapo = false;
+        brandGuitar = "Yamaha";
+        colorGuitar = "amber";
+    }
+    
+    public String toString() {
+        return "brand is " + brandGuitar + ", and color is " + colorGuitar + ".";
+    }
+    
+    public boolean TuneGuitar() {
+        System.out.println("You tuned the guitar.");
+        return isTuned = true;
+    }
+    
+    public boolean startPlaying() {
+        System.out.println("You have started playing the guitar.");
+        return isPlaying = true;
+    }
+    
+    public boolean stopPlaying() {
+        System.out.println("You have stopped playing the guitar.");
+        return isPlaying = false;
+    }
+    
+    public void setBrandGuitar(String brandGuitar) {
+        this.brandGuitar = brandGuitar;
+    }
+    
+    public String getBrandGuitar() {
+        return brandGuitar;
+    }
+    
+    public void setColorGuitar(String colorGuitar) {
+        this.colorGuitar = colorGuitar;
+    }
+    
+    public String getColorGuitar() {
+        return colorGuitar;
+    }
+    
+    public void setFingerOne(int fingerOne) {
+        this.fingerOne = fingerOne;
+    }
+    
+    public int getFingerOne() {
+        return fingerOne;
+    }
+    
+    public void setFingerTwo(int fingerTwo) {
+        this.fingerTwo = fingerTwo;
+    }
+    
+    public int getFingerTwo() {
+        return fingerTwo;
+    }
+    
+    public void setFingerThree(int fingerThree) {
+        this.fingerThree = fingerThree;
+    }
+    
+    public int getFingerThree() {
+        return fingerThree;
+    }
+    
+    public void setFingerFour(int fingerFour) {
+        this.fingerFour = fingerFour;
+    }
+    
+    public int getFingerFour() {
+        return fingerFour;
+    }
+    
+    public void setFingerFive(int fingerFive) {
+        this.fingerFive = fingerFive;
+    }
+    
+    public int getFingerFive() {
+        return fingerFive;
+    }
+}
+
+********** MAIN CLASS **********
+
+//File: TestGuitar
+//Author: Zach Burson
+//Class: CMIS 141
+//Date: 29 Jun 2016
+//Purpose: Test the Guitar class
+
+import java.util.Scanner;
+import java.util.InputMismatchException;
+
+public class TestGuitar {
+
+    public static void main(String[] args) {
+
+        Scanner in = new Scanner(System.in);
+        Guitar myGuitar = new Guitar();
+        int userDecision = 0;
+        int chordDecision;
+        int changeGuitar = 0;
+
+        System.out.println("You picked up the guitar.");
+        System.out.println("Your guitar's " + myGuitar);
+        System.out.println("It has " + myGuitar.NUMBER_OF_STRINGS + " strings and " + myGuitar.NUMBER_OF_FRETS + " frets.");
+        System.out.println("If you would like to change guitars, press 1.");
+        changeGuitar = in.nextInt();
+        
+        if (changeGuitar == 1) {
+            myGuitar.setBrandGuitar("Cordoba");
+            myGuitar.setColorGuitar("black");
+            System.out.println("Your new guitar's " + myGuitar);
+        }
+
+        if (myGuitar.isTuned == true) {
+            System.out.println("The guitar is tuned.");
+        } else {
+            System.out.println("The guitar is not tuned.  Please tune it by pressing 1.");
+        }
+
+        while (userDecision == 0) {
+            try {
+                userDecision = in.nextInt();
+                if (userDecision == 1) {
+                    myGuitar.TuneGuitar();
+                }
+                else {
+                    System.out.println("Please tune the guitar before playing.");
+                    userDecision = 0;
+                }
+            } catch (InputMismatchException ex) {
+                System.out.println("Please tune the guitar before playing.");
+                String flush = in.nextLine();
+            }
+        }
+
+        userDecision = 0;
+
+        if (myGuitar.isPlaying == true) {
+            System.out.println("You are currently playing the guitar.");
+        } else {
+            System.out.println("If you would like to play the guitar, press 1.");
+        }
+
+        while (userDecision == 0) {
+            try {
+                userDecision = in.nextInt();
+                if (userDecision == 1) {
+                    myGuitar.startPlaying();
+                } else {
+                    System.out.println("You put the guitar down.");
+                    return;
+                }
+            } catch (InputMismatchException ex) {
+                System.out.println("If you would like to play the guitar, press 1.");
+                String flush = in.nextLine();
+            }
+        }
+
+        userDecision = 0;
+
+        System.out.println("Please decide which chord you would like to play.");
+        System.out.println("1. E Minor\n2. C Major\n3. G Major\n4. D Major\n5. A Minor\n6. E Major\n7. A Major");
+
+        while (userDecision == 0) {
+            try {
+                chordDecision = in.nextInt();
+                switch (chordDecision) {
+                    case 1:
+                        myGuitar.setFingerTwo(2);
+                        myGuitar.setFingerThree(2);
+                        System.out.println("Your fingers are on frets " + myGuitar.getFingerTwo() + " and " + myGuitar.getFingerThree());
+                        System.out.println("Your fingers are on strings " + myGuitar.STRING_NOTES[1] + " and " + myGuitar.STRING_NOTES[2]);
+                        break;
+                    case 2:
+                        myGuitar.setFingerOne(1);
+                        myGuitar.setFingerTwo(2);
+                        myGuitar.setFingerThree(3);
+                        System.out.println("Your fingers are on frets " + myGuitar.getFingerOne() + ", " + myGuitar.getFingerTwo() + " and " + myGuitar.getFingerThree());
+                        System.out.println("Your fingers are on strings " + myGuitar.STRING_NOTES[4] + ", " + myGuitar.STRING_NOTES[2] + " and " + myGuitar.STRING_NOTES[1]);
+                        break;
+                    case 3:
+                        myGuitar.setFingerThree(3);
+                        myGuitar.setFingerTwo(2);
+                        myGuitar.setFingerFour(3);
+                        System.out.println("Your fingers are on frets " + myGuitar.getFingerThree() + ", " + myGuitar.getFingerTwo() + " and " + myGuitar.getFingerFour());
+                        System.out.println("Your fingers are on strings " + myGuitar.STRING_NOTES[0] + ", " + myGuitar.STRING_NOTES[1] + " and " + myGuitar.STRING_NOTES[5]);
+                        break;
+                    case 4:
+                        myGuitar.setFingerOne(2);
+                        myGuitar.setFingerThree(3);
+                        myGuitar.setFingerTwo(2);
+                        System.out.println("Your fingers are on frets " + myGuitar.getFingerOne() + ", " + myGuitar.getFingerThree() + " and " + myGuitar.getFingerTwo());
+                        System.out.println("Your fingers are on Strings " + myGuitar.STRING_NOTES[3] + ", " + myGuitar.STRING_NOTES[4] + " and " + myGuitar.STRING_NOTES[5]);
+                        break;
+                    case 5:
+                        myGuitar.setFingerTwo(2);
+                        myGuitar.setFingerThree(2);
+                        myGuitar.setFingerOne(1);
+                        System.out.println("Your fingers are on frets " + myGuitar.getFingerTwo() + ", " + myGuitar.getFingerThree() + " and " + myGuitar.getFingerOne());
+                        System.out.println("Your fingers are on strings " + myGuitar.STRING_NOTES[2] + ", " + myGuitar.STRING_NOTES[3] + " and " + myGuitar.STRING_NOTES[4]);
+                        break;
+                    case 6:
+                        myGuitar.setFingerTwo(2);
+                        myGuitar.setFingerThree(2);
+                        myGuitar.setFingerOne(1);
+                        System.out.println("Your fingers are on frets " + myGuitar.getFingerTwo() + ", " + myGuitar.getFingerThree() + " and " + myGuitar.getFingerOne());
+                        System.out.println("Your fingers are on strings " + myGuitar.STRING_NOTES[1] + ", " + myGuitar.STRING_NOTES[2] + " and " + myGuitar.STRING_NOTES[3]);
+                        break;
+                    case 7:
+                        myGuitar.setFingerOne(2);
+                        myGuitar.setFingerTwo(2);
+                        myGuitar.setFingerThree(2);
+                        System.out.println("Your fingers are on frets " + myGuitar.getFingerOne() + ", " + myGuitar.getFingerTwo() + " and " + myGuitar.getFingerThree());
+                        System.out.println("Your fingers are on strings " + myGuitar.STRING_NOTES[2] + ", " + myGuitar.STRING_NOTES[3] + " and " + myGuitar.STRING_NOTES[4]);
+                        break;
+                    default:
+                        System.out.println("Please make a selection 1-7.  If you would like to stop playing, press 0.");
+                        while (userDecision == 0) {
+                            try {
+                                userDecision = in.nextInt();
+                                if (userDecision == 0) {
+                                    myGuitar.stopPlaying();
+                                    return;
+                                }
+                                else {
+                                    System.out.println("Press 0 to stop playing.");
+                                    userDecision = 0;
+                                }
+                            } catch (InputMismatchException ex) {
+                                System.out.println("Please make a selection 1-7.  If you would like to stop playing, press 0.");
+                                String flush = in.nextLine();
+                                userDecision = 0;
+                            }
+                        }
+                }
+            } catch (InputMismatchException ex) {
+                System.out.println("Please make a selection 1-7.  If you would like to stop playing, press 0.");
+                String flush = in.nextLine();
+            }
+        }
+    }
+}
