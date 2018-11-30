@@ -1,0 +1,127 @@
+//File: Clock
+//Author: Zach Burson
+//Class: CMIS 141
+//Date: 30 Jun 2016
+//Purpose: Create a clock that allows the user to start and stop with current time and elapsed time.
+package testclockv2;
+
+import java.time.Duration;
+import java.time.LocalTime;
+
+public class Clock {
+
+    private LocalTime startTime;
+    private LocalTime stopTime;
+    private long elapsedTime;
+    private long inputStart;
+    private long inputStop;
+    //private int hours, minutes, seconds;
+    //private boolean isRunning = false;
+
+    public Clock() {
+        startTime = LocalTime.now();
+    }
+
+    /*public Clock(LocalTime startTime, LocalTime stopTime) {
+        this.startTime = startTime;
+        this.stopTime = stopTime;
+    }
+
+    public void start(int hours, int minutes, int seconds) {
+        this.hours = ((hours >= 0 && hours < 24) ? hours : 0);
+        this.minutes = ((minutes >= 0 && minutes < 60) ? minutes : 0);
+        this.seconds = ((seconds >= 0 && seconds < 60) ? seconds : 0);
+        startTime = LocalTime.of(hours, minutes, seconds);
+    }*/
+    
+    public void start() {
+        startTime = LocalTime.now().plusSeconds(inputStart);
+    }
+    
+    /*public void start() {
+        if (isRunning != true) {
+            startTime = LocalTime.now();
+            isRunning = true;
+        }
+    }*/
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+    
+    public void inputStop() {
+        this.inputStop = inputStop;
+    }
+    
+    public void stop() {
+        stopTime = LocalTime.now();
+    }
+    
+    /*public void stop() {
+        if (isRunning == true) {
+            stopTime = LocalTime.now();
+            isRunning = false;
+        }
+    }*/
+    
+    public LocalTime getStopTime() {
+        return stopTime;
+    }
+
+    public long getElapsedTime() {
+        elapsedTime = Duration.between(startTime, stopTime).toNanos();
+        elapsedTime = elapsedTime / 1000000000;
+        return elapsedTime;
+    }
+
+    /*public Boolean getIsRunning() {
+        return isRunning;
+    }*/
+
+}
+
+********** MAIN CLASS **********
+
+//File: Clock
+//Author: Zach Burson
+//Class: CMIS 141
+//Date: 30 Jun 2016
+//Purpose: Test the clock class.
+package testclockv2;
+
+import java.time.Duration;
+import java.time.LocalTime;
+import java.util.Scanner;
+
+class TestClockV2 {
+
+    public static void main(String[] args) {
+
+        //LocalTime arg1;
+        //LocalTime arg2;
+        //arg1 = LocalTime.parse(args[0]);
+        //arg2 = LocalTime.parse(args[1]);
+        //Clock myClock = new Clock(arg1, arg2);
+        //Clock myClock = new Clock();
+        //myClock.getElapsedTime();
+        
+        Clock myClock = new Clock();
+        System.out.println("Current time is " + myClock.getStartTime());
+        
+        if (args.length > 0) {
+            try {
+                long inputStart = Integer.parseInt(args[0]);
+                myClock.start();
+                System.out.println("Your start time is " + myClock.getStartTime());
+                long inputStop = Integer.parseInt(args[1]);
+                myClock.stop();
+                System.out.println("Your stop time is " + myClock.getStopTime());
+            }
+            catch (NumberFormatException e) {
+                System.out.println("You entered " + args[0] + " and " + args[1] + ".  Please enter an integer in seconds.");
+            }
+        }
+
+    }
+
+}
