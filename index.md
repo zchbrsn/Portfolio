@@ -13,9 +13,6 @@ V/R
 Zachary Burson
 
 
-
 [Hacker Rank Profile](https://www.hackerrank.com/zchbrsn)
-
-[Code Wars Profile](https://www.codewars.com/users/Ecobear)
 
 ## Thank you for your consideration
