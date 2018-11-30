@@ -1,0 +1,29 @@
+//File: RandGen
+//Author: Zach Burson
+//Class: CMIS 141
+//Date: 30 Jun 2016
+//Purpose: Create random numbers using args at cmd prompt
+
+import java.util.Random;
+
+public class RandGen {
+
+    public static void main(String[] args) {
+
+        if (args.length > 0) {
+            try {
+                Random rand = new Random(System.currentTimeMillis());
+                int x = Integer.parseInt(args[0]);
+                System.out.println("You are generating " + x + " random number(s).");
+                int y = Integer.parseInt(args[1]);
+                System.out.println("Your number range is from 0-" + y);
+                
+                for (int i = 1; i <= x; i++) {
+                    System.out.println(i + ": " + rand.nextInt(y));
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("You entered " + args[0] + ", please enter an integer.");
+            }
+        }
+    }
+}
