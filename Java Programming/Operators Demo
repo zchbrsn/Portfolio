@@ -1,0 +1,46 @@
+public class OperatorsDemo
+{
+	public static void main (String [] args)
+	{
+		System.out.println ("Math Operators Demo");
+		
+		//Place holders to store calculation
+		double results;
+		int intResults;
+
+		//Addition (+)
+		results = 4.1 + 8.1;
+		System.out.println ("4.1 + 8.1 = " + results);
+
+		results = 4.1 + 10.5;
+		System.out.println ("4.1 + 10.5 = " + results);
+
+		//Subtraction (-)
+		results = 4.1 - 8.1;
+		System.out.println ("4.1 - 8.1 = " + results);
+
+		results = 4.1 - 10.5;
+		System.out.println ("4.1 - 10.5 = " + results);
+
+		//Multiplication (*)
+		results = 4.1 * 8.1;
+		System.out.println ("4.1 * 8.1 = " + results);
+
+		results = 4.1 * 10.5;
+		System.out.println ("4.1 * 10.5 = " + results);
+
+		//Division (/)
+		results = 4.1 / 8.1;
+		System.out.println ("4.1 / 8.1 = " + results);
+
+		results = 4.1 / 10.5;
+		System.out.println ("4.1 / 10.5 = " + results);
+
+		//Modulus (%)
+		intResults = 20 % 3;
+		System.out.println ("20 % 3 = " + intResults);
+
+		intResults = 20 % 5;
+		System.out.println ("20 % 5 = " + intResults);
+	}
+}
