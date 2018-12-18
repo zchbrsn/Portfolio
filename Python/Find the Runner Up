@@ -1,0 +1,14 @@
+if __name__ == '__main__':
+    n = int(input())
+    arr = map(int, input().split())
+
+    sort_list = []
+
+    for each in arr:
+        if each not in sort_list:
+            sort_list.append(each)
+
+    sort_list.sort()
+    second_place = sort_list[-2]
+
+    print(second_place)
